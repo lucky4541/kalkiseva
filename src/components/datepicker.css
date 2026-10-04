@@ -1,0 +1,67 @@
+/* 📅 Overall calendar layout */
+.react-datepicker {
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* 🧭 Top month header */
+.react-datepicker__header {
+  background-color: white;
+  border-bottom: none;
+  padding-top: 1.25rem;
+}
+
+/* 📆 Month & Year title */
+.react-datepicker__current-month {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* 📊 Grid layout */
+.react-datepicker__day-name,
+.react-datepicker__day {
+  width: 2.5rem;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  margin: 0.1rem;
+  border-radius: 0.375rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+}
+
+/* 🟩 Available Day Styling */
+.available-day {
+  background-color: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+/* ✅ Remove black circle on selected */
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  background-color: transparent !important;
+  color: inherit !important;
+  border-radius: 0.375rem !important;
+  box-shadow: none !important;
+}
+
+/* 📅 Hover effect */
+.react-datepicker__day:hover {
+  background-color: #e5e7eb;
+}
+
+/* 🔘 Today in yellow and not clickable */
+.react-datepicker__day--today,
+.today-disabled {
+  background-color: #fde68a !important;
+  color: #92400e !important;
+  font-weight: 600;
+  border-radius: 0.375rem;
+  cursor: not-allowed;
+  pointer-events: none;
+}

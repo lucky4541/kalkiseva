@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
+.react-datepicker-wrapper {
+  cursor: pointer;
+}
+
+.react-datepicker__input-container input {
+  cursor: pointer; /* 🖐️ hand cursor */
+  transition: border 0.2s ease-in-out;
+}
+.react-datepicker__input-container input:focus {
+  border-color: #8B5CF6;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3);
+}
+
+/* Add this to your global stylesheet */
+.slick-slide {
+  padding: 0 10px;
+}
+
+.slick-list {
+  margin: 0 -10px;
+}
+
+.slick-dots {
+  bottom: 20px;
+}
+
+.slick-dots li button:before {
+  color: white;
+  opacity: 0.5;
+  font-size: 10px;
+}
+
+.slick-dots li.slick-active button:before {
+  color: white;
+  opacity: 1;
+}
+
+/* Hide Google Translate Bottom Bar */
+.goog-te-banner-frame.skiptranslate, 
+.goog-te-gadget {
+  display: none !important;
+}
+
+/* Hide iframe added by Google Translate */
+body > .skiptranslate {
+  display: none !important;
+}
+
+/* Push back body margin (sometimes Google Translate adds margin) */
+body {
+  top: 0px !important;
+}
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+body {
+  top: 0px !important;
+}
+
+.glow-button {
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.6), 0 0 30px rgba(128, 90, 213, 0.7);
+  transition: all 0.3s ease-in-out;
+}
+.glow-button:hover {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(128, 90, 213, 0.9);
+}
+
+.slick-slide > div {
+  height: 100%;
+}
+.marquee {
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee-content {
+  display: flex;
+  gap: 30px;
+  animation: scroll 60s linear infinite;
+}
+
+.marquee:hover .marquee-content {
+  animation-play-state: paused;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Review Card Style */
+.review-card {
+  min-width: 280px;   /* 👈 Reduced width */
+  max-width: 280px;
+  min-height: 320px;  /* 👈 Increased height */
+  background: white;
+  padding: 24px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  margin-bottom: 20px;  
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 10s linear infinite;
+}
+
+@keyframes fadeOut {
+  from { opacity: 0.4; }
+  to { opacity: 0; }
+}
+
+.animate-fadeOut {
+  animation: fadeOut 2s ease-out forwards;
+}
+
+
+
