@@ -828,7 +828,7 @@ const downloadInvoice = async (booking_id: string) => {
                             {selectedBooking.devotee_gothra[index]}
                           </p>
                           <p className="text-sm text-gray-500">
-                            {selectedBooking.devotee_date_of_birth[index]}
+                            {selectedBooking.devotee_date_of_birth?.[index] || "Not provided"}
                           </p>
                         </div>
                       ))}

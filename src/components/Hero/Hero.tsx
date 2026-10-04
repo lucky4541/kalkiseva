@@ -159,13 +159,13 @@ export const Hero = () => {
                       {slide.description}
                     </p>
 
-                    {slide.button_text && slide.button_link && (
+                    {slide.button_link?.trim() && (
                       <motion.a
                         href={slide.button_link}
                         whileHover={{ scale: 1.05 }}
                         className="inline-block bg-primary px-6 py-3 rounded-full font-semibold text-white text-sm md:text-base shadow-lg hover:bg-primary/90 transition-all"
                       >
-                        {slide.button_text}
+                        {slide.button_text?.trim() || "Book Puja"}
                       </motion.a>
                     )}
                   </motion.div>

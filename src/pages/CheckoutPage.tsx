@@ -371,7 +371,9 @@ const gstRate = 5;
 const gstAmount = +(totalAfterDiscount * gstRate / (100 + gstRate)).toFixed(2);
 
 // For states
-const isWestBengal = billingAddress.state === "West Bengal";
+// Place of supply = delivery state (billing state when shipping is the same)
+const supplyState = sameAsBilling ? billingAddress.state : shippingAddress.state;
+const isWestBengal = (supplyState || "").toLowerCase().replace(/[^a-z]/g, "") === "westbengal";
 const cgst = isWestBengal ? +(gstAmount / 2).toFixed(2) : 0;
 const sgst = isWestBengal ? +(gstAmount / 2).toFixed(2) : 0;
 const igst = !isWestBengal ? gstAmount : 0;
@@ -763,12 +765,12 @@ const total = totalToBePaid;
 
     if (
       !devotees?.length ||
-      devotees.some((d) => !d.name || !d.gothra || !d.dateofbirth)
+      devotees.some((d) => !d.name || !d.gothra)
     ) {
       return Swal.fire({
         icon: "error",
         title: "Devotee Details Missing",
-        text: "Please fill all devotee details.",
+        text: "Please fill the name and gotra of every devotee.",
       });
     }
 
@@ -982,9 +984,20 @@ const total = totalToBePaid;
                       placeholder="Enter Gotra"
                       required
                     />
+                    {/* Devotees who don't know their gotra traditionally use Kashyap */}
+                    <label className="flex items-center gap-2 mt-2 text-sm text-gray-700 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={devotee.gothra === "Kashyap"}
+                        onChange={(e) =>
+                          handleDevoteeChange(index, "gothra", e.target.checked ? "Kashyap" : "")
+                        }
+                      />
+                      I don't know my Gotra (use "Kashyap")
+                    </label>
                   </div>
                     <div className="max-w-[180px]">
-  <label className={labelClasses}>Date Of Birth *</label>
+  <label className={labelClasses}>Date Of Birth (optional)</label>
 
   <input
     type="date"
@@ -1001,7 +1014,6 @@ const total = totalToBePaid;
       const [y, m, d] = iso.split("-");
       handleDevoteeChange(index, "dateofbirth", `${d}/${m}/${y}`);
     }}
-    required
   />
 </div>
                 </div>

@@ -115,6 +115,15 @@ export const PujaDetailsPage = () => {
   const [, setLoadingReviews] = useState(true);
   const [, setReviewsError] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  // Index of the "Reviews" tab; opened directly when the URL has #reviews
+  const REVIEWS_TAB = 3;
+  const [detailsTab, setDetailsTab] = useState<number>(
+    () => (window.location.hash === "#reviews" ? REVIEWS_TAB : 0)
+  );
+  const openReviews = () => {
+    setDetailsTab(REVIEWS_TAB);
+    setTimeout(() => document.getElementById("puja-tabs")?.scrollIntoView({ behavior: "smooth" }), 100);
+  };
   const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
   const [loading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -288,6 +297,13 @@ export const PujaDetailsPage = () => {
   }, [id, BASE_URL]);
 
 
+  // Arriving from a "Reviews" link on a puja card: scroll to the open Reviews tab
+  useEffect(() => {
+    if (!loading && window.location.hash === "#reviews") {
+      setTimeout(() => document.getElementById("puja-tabs")?.scrollIntoView({ behavior: "smooth" }), 400);
+    }
+  }, [loading]);
+
   if (loading) return <KalkiSevaLoader />;
 
   if (!puja) return <div>Puja not found</div>;
@@ -307,7 +323,7 @@ export const PujaDetailsPage = () => {
   // Filter packages based on selected date
   const filteredPackages = puja?.pujaaPacks?.filter((pkg) => {
     if (!selectedDate) return false;
-    return pkg.puja_date === formatDateString(selectedDate);
+    return String(pkg.puja_date).split("T")[0] === formatDateString(selectedDate);
   });
 
   // Removed duplicate declaration of isDateAvailable
@@ -547,9 +563,15 @@ export const PujaDetailsPage = () => {
 
     const formattedDate = format(targetDate, "yyyy-MM-dd"); // from date-fns
 
-    const isInList = puja?.pujaAvailableDates?.some(
-      (pujaDate) => pujaDate.puja_date === formattedDate
-    );
+    // A date is bookable only if it is listed AND has at least one package,
+    // otherwise it showed green but opened "No packages available"
+    const isInList =
+      puja?.pujaAvailableDates?.some(
+        (pujaDate) => String(pujaDate.puja_date).split("T")[0] === formattedDate
+      ) &&
+      puja?.pujaaPacks?.some(
+        (pkg) => String(pkg.puja_date).split("T")[0] === formattedDate
+      );
 
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
@@ -1098,18 +1120,21 @@ const handleBooking = async () => {
                 <StarIcon className="h-5 w-5" />
                 <span className="ml-1">{averageRating.toFixed(1)}</span>
               </div>
-              <span className="text-sm text-gray-500">
-                ({totalReviews} reviews)
-              </span>
+              <button
+                onClick={openReviews}
+                className="text-sm text-primary font-medium underline hover:text-primary/80"
+              >
+                ({totalReviews} reviews) – Read reviews
+              </button>
             </div>
           )}
 
           {/* 📅 Date Picker */}
           {loading && <Skeleton width="100%" height={40} />}
 
-          <div className="mt-6">
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Choose Date
+          <div className="mt-6 p-4 rounded-xl border-2 border-primary bg-primary/5 shadow-md">
+            <label className="block text-lg font-bold text-primary mb-2">
+              📅 Step 1: Click to select a Date
             </label>
             <div className="w-full sm:w-64">
               <AnimatedDatePicker
@@ -1124,6 +1149,16 @@ const handleBooking = async () => {
 
           {!loading && puja?.pujaAvailableDates?.length === 0 && (
             <p className="text-red-500 text-sm mt-4">No available dates</p>
+          )}
+
+          {/* Step 2: open package selection */}
+          {selectedDate && !selectedPackage && (
+            <button
+              onClick={() => setIsPackageModalOpen(true)}
+              className="mt-4 w-full sm:w-auto px-6 py-3 text-lg font-bold text-white bg-primary rounded-xl shadow-lg ring-4 ring-primary/30 hover:bg-primary/90 transition animate-pulse"
+            >
+              📦 Step 2: Click to select a Package
+            </button>
           )}
 
           {/* Selected Package */}
@@ -1174,9 +1209,9 @@ const handleBooking = async () => {
 
       {/* Tabs Section */}
       <div className="mt-12 overflow-x-auto scrollbar-hide ">
-        <Tab.Group>
+        <Tab.Group selectedIndex={detailsTab} onChange={setDetailsTab}>
           <div className="overflow-x-auto max-w-full scrollbar-hide px-4 mb-4">
-            <Tab.List className="flex space-x-4 w-max">
+            <Tab.List id="puja-tabs" className="flex space-x-4 w-max">
               {[
                 "Description",
                 "Temple Details",
@@ -2080,9 +2115,12 @@ const handleBooking = async () => {
               ✕
             </button>
 
-            <h3 className="text-2xl font-bold mb-6 text-center text-primary">
-              Select a Package
+            <h3 className="text-2xl font-extrabold mb-2 text-center text-primary">
+              📦 Click to select a Package
             </h3>
+            <p className="text-center text-sm text-gray-600 mb-6">
+              {format(selectedDate, "dd MMM yyyy")}
+            </p>
 
             {filteredPackages?.length > 0 ? (
               <div className="space-y-6">
@@ -2090,7 +2128,7 @@ const handleBooking = async () => {
                   <motion.div
                     key={pkg.package_id}
                     whileHover={{ scale: 1.02 }}
-                    className="cursor-pointer border border-gray-200 rounded-xl p-6 hover:bg-gray-50 transition-all shadow-md"
+                    className="cursor-pointer border-2 border-gray-200 rounded-xl p-6 hover:border-primary hover:bg-primary/5 transition-all shadow-md"
                     onClick={() => {
                       setSelectedPackage(pkg);
                       setIsPackageModalOpen(false);
@@ -2119,6 +2157,10 @@ const handleBooking = async () => {
                         <li key={idx}>{featureItem.feature}</li>
                       ))}
                     </ul>
+
+                    <div className="mt-4 w-full py-2 text-center font-bold text-white bg-primary rounded-lg">
+                      Select this Package
+                    </div>
                   </motion.div>
                 ))}
               </div>

@@ -26,10 +26,10 @@ export const TempleCard = ({ id, image, name, location }: TempleCardProps) => {
         <h3 className="text-xl font-semibold">{name}</h3>
         <p className="text-sm opacity-90">{location}</p>
         <button
-          onClick={() => navigate(`/temple/${id}`)}  // ✅ Name removed from URL
-          className="mt-2 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
+          onClick={() => navigate(`/temple/${id}?tab=pujas`)}  // opens the temple's puja list
+          className="mt-2 px-4 py-2 font-bold bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
         >
-          View More
+          🙏 Book Puja
         </button>
       </div>
     </div>
