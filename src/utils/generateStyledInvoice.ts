@@ -37,6 +37,7 @@ interface BookingDetails {
   full_name?: string;
   temple_name?: string;
   billing_address?: Address;
+  shipping_address?: Address;
 }
 
 // -----------------------------------------------------------------------------
@@ -125,9 +126,12 @@ export const generateStyledInvoice = async (data: BookingDetails) => {
   };
 
   // ---------------- GST CALCULATION ----------------
+  // Place of supply for prasad is the delivery (shipping) state; fall back to billing.
+  // West Bengal -> CGST + SGST, any other state -> IGST
+  const supplyState =
+    data.shipping_address?.state?.trim() ? data.shipping_address.state : data.billing_address?.state;
   const isWestBengal =
-    data.billing_address?.state?.toLowerCase().replace(/\s/g, "") ===
-    "westbengal";
+    (supplyState || "").toLowerCase().replace(/[^a-z]/g, "") === "westbengal";
 
   const discount = cleanNumber(data.discount_amount);
   const totalPaid = cleanNumber(data.total_amount);
@@ -235,7 +239,7 @@ export const generateStyledInvoice = async (data: BookingDetails) => {
     headStyles: { fillColor: green, textColor: "#fff", fontStyle: "bold" },
     head: [["Sl No", "Item", "HSN", "Description", "Amount"]],
     body: [
-      ["1", "Puja Prasad (Sweets)", "2106", "Base Price", format(basePrice)],
+      ["1", "Puja Prasad (Sweets)", "170490", "Base Price", format(basePrice)],
       ["", "", "", "Discount", "-" + format(discount)],
       ["", "", "", "Subtotal", format(subtotal)],
       ...(isWestBengal

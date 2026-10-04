@@ -54,7 +54,10 @@ export const TempleDetailsPage = () => {
   const [temple, setTemple] = useState<Temples | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<string>("overview");
+  // "Book Puja" links open the temple straight on its pujas tab (?tab=pujas)
+  const [activeTab, setActiveTab] = useState<string>(
+    () => new URLSearchParams(window.location.search).get("tab") || "overview"
+  );
   const [templePujas, setTemplePujas] = useState<Puja[]>([]);
   const [pujaLoading, setPujaLoading] = useState<boolean>(true);
   const [selectedMedia, setSelectedMedia] = useState<string | null>(null);
@@ -98,6 +101,13 @@ useEffect(() => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
+
+  // Scroll to the puja list when arriving from a "Book Puja" button
+  useEffect(() => {
+    if (temple && new URLSearchParams(window.location.search).get("tab") === "pujas") {
+      setTimeout(() => document.getElementById("temple-tabs")?.scrollIntoView({ behavior: "smooth" }), 300);
+    }
+  }, [temple]);
 
   if (loading) return <KalkiSevaLoader />;
   if (error) return <div>Error: {error}</div>;
@@ -259,6 +269,7 @@ const closeModalOutside = () => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
+        id="temple-tabs"
         className="flex overflow-x-auto space-x-4 mb-8 pb-2 scrollbar-hide"
       >
         {["overview", "history", "timings", "facilities", "festivals", "pujas"].map((tab) => (

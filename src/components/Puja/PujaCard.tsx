@@ -42,9 +42,9 @@ export const PujaCard = ({
     const stars = [];
     for (let i = 1; i <= 5; i++) {
       if (rating >= i) {
-        stars.push(<FaStar key={i} className="text-yellow-400" />);
+        stars.push(<FaStar key={i} className="text-yellow-400" fill="currentColor" />);
       } else if (rating >= i - 0.5) {
-        stars.push(<FaStarHalfAlt key={i} className="text-yellow-400" />);
+        stars.push(<FaStarHalfAlt key={i} className="text-yellow-400" fill="currentColor" />);
       } else {
         stars.push(<FaRegStar key={i} className="text-yellow-400" />);
       }
@@ -125,10 +125,14 @@ export const PujaCard = ({
           <Skeleton height={16} width="50%" />
         ) : (
           <div className="flex items-center">
-            <div className="flex text-lg">{renderStars(rating)}</div>
-            <span className="ml-2 text-gray-500">
-              {rating.toFixed(1)} / {ratingCount} {ratingCount === 1 ? 'Review' : 'Reviews'}
-            </span>
+            <div className="flex text-lg">{renderStars(Number(rating) || 0)}</div>
+            <button
+              onClick={() => navigate(`/puja/${id}#reviews`)}
+              className="ml-2 text-primary underline hover:text-primary/80"
+              title="Read reviews"
+            >
+              {(Number(rating) || 0).toFixed(1)} / {ratingCount} {ratingCount === 1 ? 'Review' : 'Reviews'}
+            </button>
           </div>
         )}
       </div>

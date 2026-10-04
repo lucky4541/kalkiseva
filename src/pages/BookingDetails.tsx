@@ -465,7 +465,7 @@ useEffect(() => {
               Gothra: {booking.devotee_gothra[index]}
             </p>
             <p className="text-sm text-gray-600">
-              DOB: {new Date(booking.devotee_date_of_birth[index]).toLocaleDateString()}
+              DOB: {booking.devotee_date_of_birth?.[index] ? new Date(booking.devotee_date_of_birth[index]).toLocaleDateString() : "Not provided"}
             </p>
           </div>
         ))}
