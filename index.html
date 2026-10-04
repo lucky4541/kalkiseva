@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/src/assets/Favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO Meta Tags -->
+    <!-- <title>Kalki Seva - Book Online Puja Services, Temple Darshan & Vedic Rituals</title> -->
+     <title>Kalki Seva - Book Online Puja Services</title>
+
+    <meta name="description" content="Kalki Seva offers online puja services, temple darshan bookings, and Vedic rituals performed by experienced priests. Book Satyanarayan Puja, Griha Pravesh, Lakshmi Puja, and more with ease and devotion." />
+    <meta name="keywords" content="Kalki Seva, Puja Booking, Temple Services, Online Puja, Hindu Rituals, Astrology Services, Indian Traditions, Vedic Pujas, Spiritual Services" />
+    <meta name="author" content="Kalki Seva Team" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="Kalki Seva - Book Pujas & Temple Services Online" />
+    <meta property="og:description" content="Book pujas, temple visits, astrology consultations and more through Kalki Seva's trusted and divine online platform." />
+    <meta property="og:image" content="/src/assets/og-image.png" />
+    <meta property="og:url" content="https://www.kalkiseva.com" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Kalki Seva - Your Gateway to Divine Services" />
+    <meta name="twitter:description" content="Experience seamless online puja booking and spiritual services through Kalki Seva." />
+    <meta name="twitter:image" content="/src/assets/twitter-card.png" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+
+    <!-- Razorpay -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <!-- Google Translate Widget Loader -->
+    <style>
+      /* Hide all translate-related elements */
+      .goog-te-banner-frame, 
+      .goog-te-menu-frame, 
+      .goog-te-ftab-frame,
+      .goog-logo-link,
+      .goog-te-gadget-icon {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+      }
+      
+      /* Prevent body shift */
+      body {
+        top: 0 !important;
+        margin-top: 0 !important;
+      }
+      
+      /* Remove text flicker */
+      .goog-text-highlight {
+        background-color: transparent !important;
+        box-shadow: none !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+
+
+
+    <!-- Google Translate Widget Mount Point -->
+    <div id="google_translate_element"></div>
+
+    <!-- Google Translate Init and Banner Removal -->
+    <script>
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: 'en',
+            includedLanguages: 'en,hi,te,ta,kn,ml,bn',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false,
+          },
+          'google_translate_element'
+        );
+      }
+
+      function removeGoogleTranslateBanner() {
+        let attempts = 0;
+        const maxAttempts = 30;
+        const interval = setInterval(() => {
+          const iframe = document.querySelector('iframe.goog-te-banner-frame');
+          const banner = document.querySelector('.goog-te-banner-frame');
+          const html = document.documentElement;
+          const body = document.body;
+
+          if (iframe || banner) {
+            if (iframe) iframe.remove();
+            if (banner) banner.remove();
+            if (body) body.style.top = '0px';
+            if (html) html.style.marginTop = '0px';
+            console.log('✅ Removed Google Translate banner');
+          }
+
+          attempts++;
+          if (attempts >= maxAttempts) {
+            clearInterval(interval);
+          }
+        }, 300);
+      }
+
+      window.addEventListener('load', () => {
+        removeGoogleTranslateBanner();
+      });
+    </script>
+
+<script>
+  // Permanent observer for translate elements
+  function watchForTranslateElements() {
+    const observer = new MutationObserver((mutations) => {
+      // Remove banner frame
+      const banner = document.querySelector('.goog-te-banner-frame');
+      if (banner) banner.remove();
+      
+      // Remove any iframes
+      document.querySelectorAll('iframe').forEach(iframe => {
+        if (iframe.src.includes('translate.google')) iframe.remove();
+      });
+      
+      // Reset body position
+      document.body.style.top = '0';
+      document.documentElement.style.marginTop = '0';
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: false,
+      characterData: false
+    });
+  }
+
+  // Initialize when page loads
+  window.addEventListener('load', () => {
+    watchForTranslateElements();
+    document.body.style.top = '0';
+  });
+</script>
+<script type="text/javascript">
+  var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+  (function () {
+    var s1 = document.createElement("script"),
+        s0 = document.getElementsByTagName("script")[0];
+    s1.async = true;
+    s1.src = 'https://embed.tawk.to/67f41a86f58c1c190e0b89ec/1io8of7ev';
+    s1.charset = 'UTF-8';
+    s1.setAttribute('crossorigin', '*');
+    s0.parentNode.insertBefore(s1, s0);
+  })();
+  </script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7962RJG2NG">
+</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7962RJG2NG');
+</script>
+  
+<!-- Meta Pixel Code -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+
+  fbq('init', '2185223475660507');
+  fbq('track', 'PageView');
+</script>
+
+<noscript>
+  <img height="1" width="1" style="display:none"
+       src="https://www.facebook.com/tr?id=2185223475660507&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
+
+    <!-- Google Translate Script -->
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  </body>
+</html>
